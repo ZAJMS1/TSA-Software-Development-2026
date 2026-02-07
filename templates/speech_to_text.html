@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Speech to Text{% endblock %}
+
+{% block content %}
+<section aria-labelledby="page-heading">
+    <h2 id="page-heading">Speech to Text</h2>
+    <p>Real-time speech transcription. Converts spoken words into text instantly, helping deaf and hard-of-hearing users follow conversations.</p>
+</section>
+
+<section aria-labelledby="controls-heading">
+    <h3 id="controls-heading">Recording Controls</h3>
+
+    <div class="recording-indicator" aria-live="assertive">
+        <span class="recording-dot"></span>
+        <span>Recording in progress...</span>
+    </div>
+
+    <div class="btn-group">
+        <button type="button" id="start-recording" class="btn btn-primary btn-large">
+            <i class="bi bi-mic" aria-hidden="true"></i>
+            Start Recording
+        </button>
+        <button type="button" id="stop-recording" class="btn btn-danger btn-large" disabled>
+            <i class="bi bi-stop-fill" aria-hidden="true"></i>
+            Stop Recording
+        </button>
+    </div>
+
+    <div class="status status-info mt-lg" role="note">
+        <strong>Browser requirement:</strong> This feature requires a browser that supports the Web Speech API
+        (Chrome, Edge, or Safari recommended). Microphone access permission is required.
+    </div>
+</section>
+
+<section aria-labelledby="transcription-heading">
+    <h3 id="transcription-heading">Transcription</h3>
+
+    <div id="transcription-output"
+         class="output-area large"
+         role="region"
+         aria-live="polite"
+         aria-label="Transcription result"
+         data-placeholder="Your transcription will appear here as you speak...">
+    </div>
+
+    <div id="interim-output"
+         class="output-area"
+         role="status"
+         aria-live="polite"
+         aria-label="Current speech being processed"
+         style="min-height: 60px; background: rgba(0, 102, 204, 0.1); margin-top: 1rem;"
+         data-placeholder="Listening...">
+    </div>
+
+    <div class="btn-group mt-lg">
+        <button type="button" id="save-transcription" class="btn btn-secondary">
+            <i class="bi bi-bookmark-plus" aria-hidden="true"></i>
+            Save Transcription
+        </button>
+        <button type="button" id="clear-transcription" class="btn btn-secondary">
+            <i class="bi bi-trash" aria-hidden="true"></i>
+            Clear
+        </button>
+        <button type="button" id="copy-transcription" class="btn btn-secondary" onclick="navigator.clipboard.writeText(document.getElementById('transcription-output').textContent)">
+            <i class="bi bi-clipboard" aria-hidden="true"></i>
+            Copy to Clipboard
+        </button>
+    </div>
+</section>
+
+<section aria-labelledby="visual-alerts-heading" class="card">
+    <h3 id="visual-alerts-heading">Visual Alerts</h3>
+    <p>
+        When speech is detected, the screen will flash briefly to alert deaf users.
+        On mobile devices with vibration support, haptic feedback is also provided.
+    </p>
+    <div class="form-group">
+        <label>
+            <input type="checkbox" id="enable-visual-alerts" checked>
+            Enable visual flash alerts for new speech
+        </label>
+    </div>
+</section>
+
+<section aria-labelledby="tips-heading" class="card">
+    <h3 id="tips-heading">Tips for Best Results</h3>
+    <ul>
+        <li><strong>Quiet environment</strong> - Background noise can affect accuracy</li>
+        <li><strong>Speak clearly</strong> - Normal pace and clear pronunciation work best</li>
+        <li><strong>Stay close to mic</strong> - Keep the microphone within 1-2 feet</li>
+        <li><strong>One person at a time</strong> - Multiple speakers can confuse the system</li>
+    </ul>
+</section>
+{% endblock %}

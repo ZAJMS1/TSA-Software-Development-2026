@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}Image Describer{% endblock %}
+
+{% block content %}
+<section aria-labelledby="page-heading">
+    <h2 id="page-heading">Image Describer</h2>
+    <p>Upload an image and receive a detailed description that you can listen to. This tool helps blind and visually impaired users understand visual content.</p>
+
+    {% if not gemini_available %}
+    <div class="status status-warning" role="alert">
+        <strong>AI features unavailable:</strong> The Gemini API key is not configured.
+        Please set the <code>GEMINI_API_KEY</code> environment variable and restart the server.
+    </div>
+    {% endif %}
+</section>
+
+<section aria-labelledby="upload-heading">
+    <h3 id="upload-heading">Upload Image</h3>
+
+    <form id="image-form" aria-describedby="form-instructions">
+        <p id="form-instructions" class="sr-only">
+            Select an image file, choose a description mode, then submit to get an AI-generated description.
+        </p>
+
+        <div class="form-group">
+            <div class="file-input-wrapper">
+                <input type="file"
+                       id="image-input"
+                       name="image"
+                       accept="image/*"
+                       aria-label="Select image file"
+                       required
+                       {% if not gemini_available %}disabled{% endif %}>
+                <label for="image-input" class="file-input-label">
+                    <i class="bi bi-folder2-open icon" aria-hidden="true"></i>
+                    <span>
+                        <strong>Click to select an image</strong><br>
+                        <span class="file-name">or drag and drop here</span><br>
+                        <small>Supports: JPG, PNG, GIF, WebP</small>
+                    </span>
+                </label>
+            </div>
+        </div>
+
+        <img id="image-preview" class="image-preview hidden" alt="Preview of selected image">
+
+        <fieldset class="form-group">
+            <legend><strong>Description Mode</strong></legend>
+            <div class="mode-selector" role="radiogroup" aria-label="Select description mode">
+                <div class="mode-option">
+                    <input type="radio" id="mode-quick" name="mode" value="quick">
+                    <label for="mode-quick">
+                        <strong>Quick</strong><br>
+                        <small>Brief, one-sentence summary</small>
+                    </label>
+                </div>
+                <div class="mode-option">
+                    <input type="radio" id="mode-detailed" name="mode" value="detailed" checked>
+                    <label for="mode-detailed">
+                        <strong>Detailed</strong><br>
+                        <small>Comprehensive description</small>
+                    </label>
+                </div>
+                <div class="mode-option">
+                    <input type="radio" id="mode-navigation" name="mode" value="navigation">
+                    <label for="mode-navigation">
+                        <strong>Navigation</strong><br>
+                        <small>For physical spaces/documents</small>
+                    </label>
+                </div>
+                <div class="mode-option">
+                    <input type="radio" id="mode-deafblind" name="mode" value="deafblind">
+                    <label for="mode-deafblind">
+                        <strong>Deafblind</strong><br>
+                        <small>Simple, structured format</small>
+                    </label>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="btn-group">
+            <button type="submit" class="btn btn-primary btn-large" {% if not gemini_available %}disabled{% endif %}>
+                <i class="bi bi-search" aria-hidden="true"></i>
+                Describe Image
+            </button>
+        </div>
+    </form>
+</section>
+
+<section aria-labelledby="output-heading">
+    <h3 id="output-heading">Description</h3>
+
+    <div id="description-output"
+         class="output-area large"
+         role="region"
+         aria-live="polite"
+         aria-label="Image description result"
+         data-placeholder="Image description will appear here after analysis...">
+    </div>
+
+    <div class="btn-group mt-lg">
+        <button type="button" id="speak-description" class="btn btn-secondary" disabled>
+            <i class="bi bi-volume-up" aria-hidden="true"></i>
+            Read Aloud
+        </button>
+        <button type="button" id="save-description" class="btn btn-secondary" disabled>
+            <i class="bi bi-bookmark-plus" aria-hidden="true"></i>
+            Save Description
+        </button>
+    </div>
+</section>
+
+<section aria-labelledby="tips-heading" class="card">
+    <h3 id="tips-heading">Tips for Best Results</h3>
+    <ul>
+        <li><strong>Clear images</strong> - Use well-lit, in-focus photos for more accurate descriptions</li>
+        <li><strong>Choose the right mode</strong> - Use "Navigation" for maps or room layouts, "Deafblind" for braille display compatibility</li>
+        <li><strong>Multiple angles</strong> - For complex scenes, try uploading different views</li>
+    </ul>
+</section>
+{% endblock %}

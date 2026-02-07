@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block title %}Saved Content{% endblock %}
+
+{% block content %}
+<section aria-labelledby="page-heading">
+    <h2 id="page-heading">Saved Content</h2>
+    <p>Access your previously saved descriptions, transcriptions, and texts. Listen to any saved item or delete those you no longer need.</p>
+</section>
+
+<section>
+    <div class="tabs" role="tablist" aria-label="Saved content categories">
+        <button class="tab active"
+                role="tab"
+                aria-selected="true"
+                aria-controls="descriptions-panel"
+                data-tab="descriptions-panel">
+            Image Descriptions ({{ descriptions|length }})
+        </button>
+        <button class="tab"
+                role="tab"
+                aria-selected="false"
+                aria-controls="transcriptions-panel"
+                data-tab="transcriptions-panel">
+            Transcriptions ({{ transcriptions|length }})
+        </button>
+        <button class="tab"
+                role="tab"
+                aria-selected="false"
+                aria-controls="texts-panel"
+                data-tab="texts-panel">
+            Saved Texts ({{ saved_texts|length }})
+        </button>
+    </div>
+
+    <!-- Image Descriptions -->
+    <div id="descriptions-panel" class="tab-content active" role="tabpanel" aria-labelledby="descriptions-tab">
+        <h3 class="sr-only">Image Descriptions</h3>
+
+        {% if descriptions %}
+        <ul class="saved-list" aria-label="Saved image descriptions">
+            {% for item in descriptions %}
+            <li class="saved-item">
+                <div class="saved-item-content">
+                    <strong>{{ item.filename }}</strong>
+                    <p class="saved-item-date">{{ item.created_at }}</p>
+                    <p>{{ item.description[:200] }}{% if item.description|length > 200 %}...{% endif %}</p>
+                </div>
+                <div class="btn-group">
+                    <button type="button"
+                            class="btn btn-secondary btn-icon speak-item"
+                            data-text="{{ item.description }}"
+                            aria-label="Read description aloud">
+                        <i class="bi bi-volume-up"></i>
+                    </button>
+                    <button type="button"
+                            class="btn btn-danger btn-icon delete-item"
+                            data-table="image_descriptions"
+                            data-id="{{ item.id }}"
+                            aria-label="Delete this description">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="text-center" style="padding: 2rem; color: var(--text-secondary);">
+            No saved image descriptions yet. Use the Image Describer to analyze images.
+        </p>
+        {% endif %}
+    </div>
+
+    <!-- Transcriptions -->
+    <div id="transcriptions-panel" class="tab-content" role="tabpanel" aria-labelledby="transcriptions-tab">
+        <h3 class="sr-only">Transcriptions</h3>
+
+        {% if transcriptions %}
+        <ul class="saved-list" aria-label="Saved transcriptions">
+            {% for item in transcriptions %}
+            <li class="saved-item">
+                <div class="saved-item-content">
+                    <strong>{{ item.source|capitalize }} Transcription</strong>
+                    <p class="saved-item-date">{{ item.created_at }}</p>
+                    <p>{{ item.text[:200] }}{% if item.text|length > 200 %}...{% endif %}</p>
+                </div>
+                <div class="btn-group">
+                    <button type="button"
+                            class="btn btn-secondary btn-icon speak-item"
+                            data-text="{{ item.text }}"
+                            aria-label="Read transcription aloud">
+                        <i class="bi bi-volume-up"></i>
+                    </button>
+                    <button type="button"
+                            class="btn btn-danger btn-icon delete-item"
+                            data-table="transcriptions"
+                            data-id="{{ item.id }}"
+                            aria-label="Delete this transcription">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="text-center" style="padding: 2rem; color: var(--text-secondary);">
+            No saved transcriptions yet. Use Speech to Text to create transcriptions.
+        </p>
+        {% endif %}
+    </div>
+
+    <!-- Saved Texts -->
+    <div id="texts-panel" class="tab-content" role="tabpanel" aria-labelledby="texts-tab">
+        <h3 class="sr-only">Saved Texts</h3>
+
+        {% if saved_texts %}
+        <ul class="saved-list" aria-label="Saved texts">
+            {% for item in saved_texts %}
+            <li class="saved-item">
+                <div class="saved-item-content">
+                    <strong>{{ item.title }}</strong>
+                    <span class="badge" style="background: var(--primary); font-size: 0.75rem;">{{ item.category }}</span>
+                    <p class="saved-item-date">{{ item.created_at }}</p>
+                    <p>{{ item.content[:200] }}{% if item.content|length > 200 %}...{% endif %}</p>
+                </div>
+                <div class="btn-group">
+                    <button type="button"
+                            class="btn btn-secondary btn-icon speak-item"
+                            data-text="{{ item.content }}"
+                            aria-label="Read text aloud">
+                        <i class="bi bi-volume-up"></i>
+                    </button>
+                    <button type="button"
+                            class="btn btn-danger btn-icon delete-item"
+                            data-table="saved_texts"
+                            data-id="{{ item.id }}"
+                            aria-label="Delete this text">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="text-center" style="padding: 2rem; color: var(--text-secondary);">
+            No saved texts yet. Save descriptions or other content to access them here.
+        </p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

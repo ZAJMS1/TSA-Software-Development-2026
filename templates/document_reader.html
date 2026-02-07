@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Document Reader{% endblock %}
+
+{% block content %}
+<section aria-labelledby="page-heading">
+    <h2 id="page-heading">Document Reader</h2>
+    <p>Upload documents and have them read aloud. Extract text from PDFs, images, and text files. Listen to documents hands-free.</p>
+
+    {% if not gemini_available %}
+    <div class="status status-warning" role="alert">
+        <strong>Limited functionality:</strong> PDF and image text extraction requires the Gemini API.
+        Text files (.txt) can still be processed. Set the <code>GEMINI_API_KEY</code> environment variable for full features.
+    </div>
+    {% endif %}
+</section>
+
+<section aria-labelledby="upload-heading">
+    <h3 id="upload-heading">Upload Document</h3>
+
+    <form id="document-form">
+        <div class="form-group">
+            <div class="file-input-wrapper">
+                <input type="file"
+                       id="document-input"
+                       name="document"
+                       accept=".txt,.pdf,.png,.jpg,.jpeg"
+                       aria-label="Select document file"
+                       required>
+                <label for="document-input" class="file-input-label">
+                    <i class="bi bi-file-earmark-text icon" aria-hidden="true"></i>
+                    <span>
+                        <strong>Click to select a document</strong><br>
+                        <span class="file-name">or drag and drop here</span><br>
+                        <small>Supports: TXT, PDF, PNG, JPG</small>
+                    </span>
+                </label>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button type="submit" class="btn btn-primary btn-large">
+                <i class="bi bi-file-text" aria-hidden="true"></i>
+                Extract Text
+            </button>
+        </div>
+    </form>
+</section>
+
+<section aria-labelledby="output-heading">
+    <h3 id="output-heading">Document Content</h3>
+
+    <div id="document-output"
+         class="output-area large"
+         role="region"
+         aria-live="polite"
+         aria-label="Extracted document text"
+         data-placeholder="Document text will appear here after extraction...">
+    </div>
+
+    <div class="btn-group mt-lg">
+        <button type="button" id="speak-document" class="btn btn-primary" disabled>
+            <i class="bi bi-volume-up" aria-hidden="true"></i>
+            Read Aloud
+        </button>
+        {% if gemini_available %}
+        <button type="button" id="simplify-document" class="btn btn-secondary" disabled>
+            <i class="bi bi-stars" aria-hidden="true"></i>
+            Simplify Text
+        </button>
+        {% endif %}
+        <button type="button" class="btn btn-secondary" onclick="navigator.clipboard.writeText(document.getElementById('document-output').textContent)">
+            <i class="bi bi-clipboard" aria-hidden="true"></i>
+            Copy to Clipboard
+        </button>
+    </div>
+</section>
+
+<section aria-labelledby="features-heading" class="card">
+    <h3 id="features-heading">Features</h3>
+    <ul>
+        <li><strong>Text Files (.txt)</strong> - Direct text extraction, works offline</li>
+        <li><strong>PDF Files</strong> - AI-powered text extraction (requires Gemini API)</li>
+        <li><strong>Images with Text</strong> - OCR to extract text from photos of documents</li>
+        <li><strong>Simplify Text</strong> - AI simplification for easier understanding (deafblind mode)</li>
+        <li><strong>Read Aloud</strong> - Listen to the entire document hands-free</li>
+    </ul>
+</section>
+
+<section aria-labelledby="tips-heading" class="card">
+    <h3 id="tips-heading">Tips</h3>
+    <ul>
+        <li><strong>Clear images</strong> - For photos of documents, ensure good lighting and focus</li>
+        <li><strong>Simple layouts</strong> - Complex multi-column layouts may not extract perfectly</li>
+        <li><strong>Simplify for braille</strong> - Use the Simplify feature to create shorter, cleaner text for braille displays</li>
+    </ul>
+</section>
+{% endblock %}

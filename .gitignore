@@ -1,0 +1,30 @@
+# Environment and secrets
+.env
+.env.local
+.env.*.local
+
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# IDE / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Optional: local DB (uncomment if you don't want to track it)
+# accessibility.db

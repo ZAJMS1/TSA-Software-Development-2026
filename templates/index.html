@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<section aria-labelledby="welcome-heading">
+    <h2 id="welcome-heading">Welcome to AccessiBridge</h2>
+    <p>
+        AccessiBridge is designed to break down communication and accessibility barriers
+        for people who are blind, deaf, or deafblind. Our tools help you navigate the
+        digital world with ease.
+    </p>
+
+    {% if not gemini_available %}
+    <div class="status status-warning" role="alert">
+        <strong>Note:</strong> AI-powered features (Image Description, Document OCR) require the Gemini API key.
+        Set the <code>GEMINI_API_KEY</code> environment variable to enable these features.
+    </div>
+    {% endif %}
+</section>
+
+<section aria-labelledby="features-heading">
+    <h2 id="features-heading">Our Tools</h2>
+
+    <div class="feature-grid">
+        <a href="{{ url_for('image_describer') }}" class="feature-card" aria-describedby="image-desc">
+            <i class="bi bi-image icon" aria-hidden="true"></i>
+            <h3>Image Describer</h3>
+            <p id="image-desc">Upload any image and receive a detailed audio description. Perfect for understanding photos, documents, or any visual content.</p>
+            <span class="badge">For Blind Users</span>
+        </a>
+
+        <a href="{{ url_for('speech_to_text') }}" class="feature-card" aria-describedby="stt-desc">
+            <i class="bi bi-mic icon" aria-hidden="true"></i>
+            <h3>Speech to Text</h3>
+            <p id="stt-desc">Real-time transcription of spoken words. Converts speech into readable text instantly for easy communication.</p>
+            <span class="badge">For Deaf Users</span>
+        </a>
+
+        <a href="{{ url_for('text_to_speech') }}" class="feature-card" aria-describedby="tts-desc">
+            <i class="bi bi-volume-up icon" aria-hidden="true"></i>
+            <h3>Text to Speech</h3>
+            <p id="tts-desc">Convert any text into natural-sounding speech. Customize voice, speed, and pitch to your preference.</p>
+            <span class="badge">For Blind Users</span>
+        </a>
+
+        <a href="{{ url_for('communication_bridge') }}" class="feature-card" aria-describedby="bridge-desc">
+            <i class="bi bi-people icon" aria-hidden="true"></i>
+            <h3>Communication Bridge</h3>
+            <p id="bridge-desc">A two-way communication tool for deaf and hearing people to converse. Speech becomes text, text becomes speech.</p>
+            <span class="badge">For Deaf + Hearing</span>
+        </a>
+
+        <a href="{{ url_for('document_reader') }}" class="feature-card" aria-describedby="doc-desc">
+            <i class="bi bi-file-earmark-text icon" aria-hidden="true"></i>
+            <h3>Document Reader</h3>
+            <p id="doc-desc">Upload documents and have them read aloud. Supports text files, PDFs, and images with text.</p>
+            <span class="badge">For Blind Users</span>
+        </a>
+
+        <a href="{{ url_for('saved_content') }}" class="feature-card" aria-describedby="saved-desc">
+            <i class="bi bi-bookmark icon" aria-hidden="true"></i>
+            <h3>Saved Content</h3>
+            <p id="saved-desc">Access your saved descriptions, transcriptions, and texts for later use.</p>
+            <span class="badge">For Everyone</span>
+        </a>
+    </div>
+</section>
+
+<section aria-labelledby="deafblind-heading" class="card">
+    <h2 id="deafblind-heading">For Deafblind Users</h2>
+    <p>
+        Our tools are designed with deafblind users in mind. Features include:
+    </p>
+    <ul>
+        <li><strong>Simplified text output</strong> - Clear, structured descriptions optimized for braille displays</li>
+        <li><strong>High contrast design</strong> - Maximum visual clarity for those with partial vision</li>
+        <li><strong>Keyboard navigation</strong> - Full keyboard accessibility for all features</li>
+        <li><strong>Haptic feedback</strong> - Vibration alerts when supported by your device</li>
+        <li><strong>Text simplification</strong> - AI-powered text simplification for easier understanding</li>
+    </ul>
+</section>
+
+<section aria-labelledby="accessibility-heading" class="card">
+    <h2 id="accessibility-heading">Accessibility Features</h2>
+    <ul>
+        <li>Full screen reader compatibility (NVDA, JAWS, VoiceOver)</li>
+        <li>High contrast mode support</li>
+        <li>Keyboard-only navigation</li>
+        <li>Large click/touch targets</li>
+        <li>Clear, readable fonts at large sizes</li>
+        <li>Reduced motion support</li>
+        <li>ARIA labels and roles throughout</li>
+    </ul>
+</section>
+{% endblock %}

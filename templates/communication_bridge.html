@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}Communication Bridge{% endblock %}
+
+{% block content %}
+<section aria-labelledby="page-heading">
+    <h2 id="page-heading">Communication Bridge</h2>
+    <p>A two-way communication tool that bridges the gap between deaf and hearing people. Type or speak - everyone can participate in the conversation.</p>
+</section>
+
+<section aria-labelledby="settings-heading" class="card">
+    <h3 id="settings-heading">Settings</h3>
+    <div class="flex gap-md flex-wrap">
+        <label>
+            <input type="checkbox" id="auto-speak" checked>
+            Auto-speak deaf user's messages (for hearing person)
+        </label>
+        <label>
+            <input type="checkbox" id="auto-flash" checked>
+            Visual flash when hearing person speaks (for deaf person)
+        </label>
+    </div>
+</section>
+
+<section aria-labelledby="conversation-heading">
+    <h3 id="conversation-heading">Conversation</h3>
+
+    <div id="conversation-area"
+         class="conversation-area"
+         role="log"
+         aria-live="polite"
+         aria-label="Conversation messages"
+         aria-relevant="additions">
+        <p class="text-center" style="color: var(--text-secondary); padding: 2rem;">
+            Start a conversation below. Messages will appear here.
+        </p>
+    </div>
+
+    <button type="button" id="clear-conversation" class="btn btn-secondary mt-lg">
+        <i class="bi bi-trash" aria-hidden="true"></i>
+        Clear Conversation
+    </button>
+</section>
+
+<section class="mt-lg">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+
+        <!-- Hearing Person Panel -->
+        <div class="card" style="border-color: var(--primary);">
+            <h3 id="hearing-heading" style="color: var(--primary);">
+                <i class="bi bi-ear" aria-hidden="true"></i>
+                Hearing Person
+            </h3>
+            <p>Speak or type your message. It will be displayed as text for the deaf person.</p>
+
+            <div class="form-group">
+                <label for="hearing-input">Your message:</label>
+                <div style="display: flex; gap: 0.5rem;">
+                    <textarea id="hearing-input"
+                              rows="3"
+                              placeholder="Type your message or use the microphone..."
+                              aria-describedby="hearing-help"
+                              style="flex: 1;"></textarea>
+                    <button type="button" id="hearing-mic" class="btn btn-secondary btn-icon" aria-label="Start voice input">
+                        <i class="bi bi-mic"></i>
+                    </button>
+                </div>
+                <p id="hearing-help" class="sr-only">Type a message or click the microphone to speak. Press Enter to send.</p>
+            </div>
+
+            <button type="button" id="hearing-send" class="btn btn-primary">
+                <i class="bi bi-send" aria-hidden="true"></i>
+                Send Message
+            </button>
+        </div>
+
+        <!-- Deaf Person Panel -->
+        <div class="card" style="border-color: var(--secondary);">
+            <h3 id="deaf-heading" style="color: var(--secondary);">
+                <i class="bi bi-hand-index-thumb" aria-hidden="true"></i>
+                Deaf Person
+            </h3>
+            <p>Type your message. It will be spoken aloud for the hearing person.</p>
+
+            <div class="form-group">
+                <label for="deaf-input">Your message:</label>
+                <textarea id="deaf-input"
+                          rows="3"
+                          placeholder="Type your message here..."
+                          aria-describedby="deaf-help"></textarea>
+                <p id="deaf-help" class="sr-only">Type a message that will be spoken aloud for the hearing person. Press Enter to send.</p>
+            </div>
+
+            <button type="button" id="deaf-send" class="btn btn-primary" style="background: var(--secondary); border-color: var(--secondary);">
+                <i class="bi bi-send" aria-hidden="true"></i>
+                Send Message (Will Be Spoken)
+            </button>
+        </div>
+
+    </div>
+</section>
+
+<section aria-labelledby="how-it-works" class="card mt-lg">
+    <h3 id="how-it-works">How It Works</h3>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+        <div>
+            <h4>For Hearing Users</h4>
+            <ol>
+                <li>Click the microphone or type your message</li>
+                <li>Your spoken words are transcribed to text</li>
+                <li>The deaf person reads your message on screen</li>
+                <li>Visual flash alerts them when you send a message</li>
+            </ol>
+        </div>
+        <div>
+            <h4>For Deaf Users</h4>
+            <ol>
+                <li>Type your message in the text box</li>
+                <li>Click send to add it to the conversation</li>
+                <li>Your message is automatically spoken aloud</li>
+                <li>The hearing person hears your message</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<section aria-labelledby="deafblind-heading" class="card">
+    <h3 id="deafblind-heading">For Deafblind Users</h3>
+    <p>
+        This tool is fully compatible with screen readers and braille displays.
+        All messages in the conversation are announced to screen readers as they arrive.
+        Use keyboard navigation to access all controls.
+    </p>
+</section>
+{% endblock %}

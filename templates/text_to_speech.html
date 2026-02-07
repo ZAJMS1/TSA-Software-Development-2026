@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}Text to Speech{% endblock %}
+
+{% block content %}
+<section aria-labelledby="page-heading">
+    <h2 id="page-heading">Text to Speech</h2>
+    <p>Convert any text into natural-sounding speech. Customize the voice, speed, and pitch to your preference. Perfect for reading articles, emails, or any written content aloud.</p>
+</section>
+
+<section aria-labelledby="input-heading">
+    <h3 id="input-heading">Enter Text</h3>
+
+    <div class="form-group">
+        <label for="text-input">Text to read aloud:</label>
+        <textarea id="text-input"
+                  rows="8"
+                  placeholder="Type or paste your text here..."
+                  aria-describedby="text-help"></textarea>
+        <p id="text-help" class="sr-only">Enter the text you want to be read aloud, then use the controls below to play it.</p>
+    </div>
+</section>
+
+<section aria-labelledby="settings-heading">
+    <h3 id="settings-heading">Voice Settings</h3>
+
+    <div class="card">
+        <div class="form-group">
+            <label for="voice-select">Voice:</label>
+            <select id="voice-select" aria-describedby="voice-help">
+                <option value="">Default Voice</option>
+            </select>
+            <p id="voice-help" class="sr-only">Select a voice for text-to-speech. Options depend on your browser and operating system.</p>
+        </div>
+
+        <div class="form-group">
+            <label for="rate-slider">Speed: <span id="rate-value">1</span>x</label>
+            <input type="range"
+                   id="rate-slider"
+                   min="0.5"
+                   max="2"
+                   step="0.1"
+                   value="1"
+                   aria-describedby="rate-help">
+            <p id="rate-help" class="sr-only">Adjust speech speed from 0.5x (slower) to 2x (faster).</p>
+        </div>
+
+        <div class="form-group">
+            <label for="pitch-slider">Pitch: <span id="pitch-value">1</span></label>
+            <input type="range"
+                   id="pitch-slider"
+                   min="0.5"
+                   max="2"
+                   step="0.1"
+                   value="1"
+                   aria-describedby="pitch-help">
+            <p id="pitch-help" class="sr-only">Adjust voice pitch from 0.5 (lower) to 2 (higher).</p>
+        </div>
+    </div>
+</section>
+
+<section aria-labelledby="controls-heading">
+    <h3 id="controls-heading">Playback Controls</h3>
+
+    <div class="btn-group">
+        <button type="button" id="speak-text" class="btn btn-primary btn-large">
+            <i class="bi bi-play-fill" aria-hidden="true"></i>
+            Play
+        </button>
+        <button type="button" id="pause-text" class="btn btn-secondary btn-large" disabled>
+            <i class="bi bi-pause-fill" aria-hidden="true"></i>
+            Pause
+        </button>
+        <button type="button" id="stop-text" class="btn btn-danger btn-large" disabled>
+            <i class="bi bi-stop-fill" aria-hidden="true"></i>
+            Stop
+        </button>
+    </div>
+</section>
+
+<section aria-labelledby="samples-heading" class="card">
+    <h3 id="samples-heading">Sample Texts</h3>
+    <p>Click any sample to load it into the text area:</p>
+
+    <div class="btn-group flex-wrap">
+        <button type="button" class="btn btn-secondary sample-text"
+                data-text="Welcome to AccessiBridge. This tool converts text to speech, helping you listen to any written content. You can adjust the voice, speed, and pitch using the controls above.">
+            Welcome Message
+        </button>
+        <button type="button" class="btn btn-secondary sample-text"
+                data-text="The quick brown fox jumps over the lazy dog. This sentence contains every letter of the English alphabet and is commonly used for testing fonts and keyboards.">
+            Pangram Test
+        </button>
+        <button type="button" class="btn btn-secondary sample-text"
+                data-text="Breaking news: Scientists have discovered a new method to improve accessibility technology. The breakthrough could help millions of people with disabilities access digital content more easily.">
+            News Sample
+        </button>
+    </div>
+</section>
+
+<section aria-labelledby="keyboard-heading" class="card">
+    <h3 id="keyboard-heading">Keyboard Shortcuts</h3>
+    <ul>
+        <li><kbd>Escape</kbd> - Stop speech immediately</li>
+        <li><kbd>Alt</kbd> + <kbd>S</kbd> - Toggle speech on/off</li>
+    </ul>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Sample text loader
+    document.querySelectorAll('.sample-text').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.getElementById('text-input').value = btn.dataset.text;
+            document.getElementById('text-input').focus();
+        });
+    });
+</script>
+{% endblock %}
