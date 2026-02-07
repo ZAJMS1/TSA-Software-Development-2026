@@ -25,6 +25,3 @@ build/
 .vscode/
 *.swp
 *.swo
-
-# Optional: local DB (uncomment if you don't want to track it)
-# accessibility.db
