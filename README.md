@@ -1,0 +1,263 @@
+# AccessiBridge
+
+AccessiBridge is a comprehensive web application designed to break down communication and accessibility barriers for people who are blind, deaf, or deafblind. The application provides a suite of tools that help users navigate the digital world with ease and communicate effectively.
+
+## Overview
+
+AccessiBridge is built with Flask and leverages Google's Gemini AI to provide intelligent image descriptions and document processing. The application is designed with accessibility as a core principle, ensuring that all features are usable by people with various disabilities.
+
+## Features
+
+### Image Describer
+Upload any image and receive a detailed audio description. This tool is perfect for understanding photos, documents, or any visual content. The tool offers multiple description modes:
+- Quick: One clear, concise sentence focusing on the main subject
+- Detailed: Comprehensive description including colors, shapes, spatial relationships, and emotional tone
+- Navigation: Structured description for understanding physical spaces or documents
+- Deafblind Mode: Simple, structured format optimized for braille displays
+
+### Speech to Text
+Real-time transcription of spoken words. Converts speech into readable text instantly for easy communication. This feature is essential for deaf users who need to understand spoken content.
+
+### Text to Speech
+Convert any text into natural-sounding speech. Customize voice, speed, and pitch to your preference. This tool helps blind users access written content through audio.
+
+### Communication Bridge
+A two-way communication tool for deaf and hearing people to converse. Speech becomes text, and text becomes speech, enabling seamless communication between users with different needs.
+
+### Document Reader
+Upload documents and have them read aloud. Supports text files, PDFs, and images with text. The tool uses AI to extract and process text from various document formats.
+
+### Saved Content
+Access your saved descriptions, transcriptions, and texts for later use. All processed content is stored in a local database for easy retrieval.
+
+### Text Simplification
+AI-powered text simplification for easier understanding, particularly useful for deafblind users. Converts complex text into clear, structured formats with simple vocabulary.
+
+## Technology Stack
+
+- **Backend Framework**: Flask 3.1.2
+- **AI Integration**: Google Generative AI (Gemini 2.5 Flash)
+- **Database**: SQLite3
+- **Frontend**: HTML5, CSS3, JavaScript
+- **File Handling**: Werkzeug
+- **Python Version**: 3.14.2 (compatible with Python 3.7+)
+
+## Installation
+
+### Prerequisites
+
+- Python 3.7 or higher
+- pip (Python package manager)
+- Git (for cloning the repository)
+
+### Setup Instructions
+
+1. Clone the repository:
+```bash
+git clone https://github.com/ZAJMS1/TSA-Software-Development-2026.git
+cd TSA-Software-Development-2026
+```
+
+2. Create a virtual environment:
+```bash
+python3 -m venv venv
+```
+
+3. Activate the virtual environment:
+   - On macOS/Linux:
+   ```bash
+   source venv/bin/activate
+   ```
+   - On Windows:
+   ```bash
+   venv\Scripts\activate
+   ```
+
+4. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+5. (Optional) Set up Gemini API key for AI features:
+```bash
+export GEMINI_API_KEY="your-api-key-here"
+```
+   - On Windows:
+   ```bash
+   set GEMINI_API_KEY=your-api-key-here
+   ```
+
+   Note: The application will run without the API key, but AI-powered features (image description and document OCR) will be limited.
+
+## Running the Application
+
+1. Ensure you're in the project directory and your virtual environment is activated.
+
+2. Run the Flask application:
+```bash
+python app.py
+```
+
+3. The application will start on `http://localhost:5001` (port 5001 is used to avoid conflicts with macOS AirPlay on port 5000).
+
+4. Open your web browser and navigate to `http://localhost:5001`.
+
+5. The application will automatically:
+   - Create the uploads directory if it doesn't exist
+   - Initialize the SQLite database with required tables
+   - Initialize the Gemini API if the API key is provided
+
+## Project Structure
+
+```
+TSA-Software-Development-2026/
+├── app.py                 # Main Flask application
+├── requirements.txt       # Python dependencies
+├── accessibility.db      # SQLite database (auto-generated)
+├── static/
+│   ├── css/
+│   │   └── style.css     # Application styles
+│   ├── js/
+│   │   └── app.js        # Client-side JavaScript
+│   └── uploads/          # Uploaded files directory
+├── templates/
+│   ├── base.html         # Base template
+│   ├── index.html        # Home page
+│   ├── image_describer.html
+│   ├── speech_to_text.html
+│   ├── text_to_speech.html
+│   ├── communication_bridge.html
+│   ├── document_reader.html
+│   └── saved_content.html
+└── venv/                 # Virtual environment (not in git)
+```
+
+## Database Schema
+
+The application uses SQLite with the following tables:
+
+- **image_descriptions**: Stores image descriptions generated by the AI
+- **transcriptions**: Stores speech-to-text transcriptions
+- **user_preferences**: Stores user preferences and settings
+- **saved_texts**: Stores user-saved text content
+- **conversation_history**: Stores conversation history for the communication bridge
+
+## API Endpoints
+
+### Web Routes
+- `GET /` - Home page
+- `GET /image-describer` - Image description tool
+- `GET /speech-to-text` - Speech to text tool
+- `GET /text-to-speech` - Text to speech tool
+- `GET /communication-bridge` - Communication bridge tool
+- `GET /document-reader` - Document reader tool
+- `GET /saved-content` - View saved content
+
+### API Endpoints
+- `POST /api/describe-image` - Generate image description
+- `POST /api/save-transcription` - Save a transcription
+- `POST /api/save-text` - Save text content
+- `POST /api/extract-document` - Extract text from document
+- `POST /api/conversation` - Save conversation message
+- `POST /api/simplify-text` - Simplify text for easier understanding
+- `GET /api/preferences` - Get user preferences
+- `POST /api/preferences` - Set user preferences
+- `DELETE /api/delete/<table>/<id>` - Delete an item from database
+
+## Accessibility Features
+
+AccessiBridge is designed with accessibility as a core principle:
+
+- Full screen reader compatibility (NVDA, JAWS, VoiceOver)
+- High contrast mode support
+- Keyboard-only navigation
+- Large click/touch targets
+- Clear, readable fonts at large sizes
+- Reduced motion support
+- ARIA labels and roles throughout
+- Skip to main content links
+- Semantic HTML structure
+
+## Configuration
+
+### Environment Variables
+
+- `GEMINI_API_KEY`: Google Gemini API key for AI features (optional but recommended)
+
+### Application Settings
+
+The application can be configured in `app.py`:
+- `UPLOAD_FOLDER`: Directory for uploaded files (default: `static/uploads`)
+- `MAX_CONTENT_LENGTH`: Maximum file upload size (default: 16MB)
+- `ALLOWED_EXTENSIONS`: Allowed file extensions for uploads
+
+## Supported File Formats
+
+- Images: PNG, JPG, JPEG, GIF, WEBP
+- Documents: PDF, TXT, DOC, DOCX
+
+## Browser Compatibility
+
+AccessiBridge is compatible with modern web browsers:
+- Chrome/Edge (latest)
+- Firefox (latest)
+- Safari (latest)
+- Opera (latest)
+
+## Development
+
+### Running in Debug Mode
+
+The application runs in debug mode by default when executed with `python app.py`. This enables:
+- Automatic reloading on code changes
+- Detailed error messages
+- Debug toolbar (if configured)
+
+### Database Management
+
+The database is automatically initialized on first run. To reset the database, simply delete `accessibility.db` and restart the application.
+
+## Troubleshooting
+
+### Gemini API Not Working
+- Verify that `GEMINI_API_KEY` is set correctly
+- Check that the API key is valid and has not expired
+- Ensure you have internet connectivity
+- Check the console for error messages
+
+### Port Already in Use
+- The application uses port 5001 by default
+- If the port is in use, modify the port in `app.py` (line 388)
+- Alternatively, stop the process using port 5001
+
+### Database Errors
+- Ensure the application has write permissions in the project directory
+- Check that SQLite3 is properly installed
+- Delete `accessibility.db` to reset the database
+
+### File Upload Issues
+- Check that the `static/uploads` directory exists and is writable
+- Verify file size is within the 16MB limit
+- Ensure the file extension is in the allowed list
+
+## Contributing
+
+Contributions are welcome. Please ensure that:
+- All new features maintain accessibility standards
+- Code follows Python PEP 8 style guidelines
+- New features are tested for accessibility
+- Documentation is updated accordingly
+
+## License
+
+This project is part of the TSA Software Development 2026 competition.
+
+## Support
+
+For issues, questions, or contributions, please use the GitHub repository's issue tracker.
+
+## Acknowledgments
+
+- Google Gemini AI for image description and document processing capabilities
+- Flask community for the excellent web framework
+- Accessibility advocates and testers who helped shape this application
